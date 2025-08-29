@@ -1,0 +1,34 @@
+# application.yml
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/task_management?useSSL=false&serverTimezone=UTC&allowPublicKeyRetrieval=true
+    username: root
+    password: 1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  jpa:
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.MySQL8Dialect
+
+
+
+server:
+  port: 8080
+
+# application.yml
+knife4j:
+  enable: true
+  # 生产环境建议关闭（安全）
+  production: false
+
+
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+
+jwt:
+  secret-key: my256BitSecretKeyWith32CharactersMyNameIsLiYaQiang # 32 字符的随机字符串
+  expiration: 86400000  # 24小时
+  token-header: Authorization  # 请求头字段名
+springdoc:
+  override-with-generic-response: false
