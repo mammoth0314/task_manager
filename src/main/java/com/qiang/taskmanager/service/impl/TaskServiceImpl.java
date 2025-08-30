@@ -1,5 +1,7 @@
 package com.qiang.taskmanager.service.impl;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
 import com.qiang.taskmanager.entity.Task;
 import com.qiang.taskmanager.mapper.TaskMapper;
 import com.qiang.taskmanager.service.TaskService;
@@ -7,6 +9,8 @@ import com.qiang.taskmanager.exception.TaskNotFoundException;
 import com.qiang.taskmanager.exception.TaskOperationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -77,6 +81,42 @@ public class TaskServiceImpl implements TaskService {
             throw e;
         } catch (Exception e) {
             throw new TaskOperationException("删除任务失败，ID: " + id, e);
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PageInfo<Task> findTasksWithPage(int pageNum, int pageSize) {
+        try {
+            PageHelper.startPage(pageNum, pageSize);
+            List<Task> tasks = taskMapper.findAll();
+            return new PageInfo<>(tasks);
+        } catch (Exception e) {
+            throw new TaskOperationException("分页查询任务失败", e);
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PageInfo<Task> findTasksByTitleWithPage(String title, int pageNum, int pageSize) {
+        try {
+            PageHelper.startPage(pageNum, pageSize);
+            List<Task> tasks = taskMapper.findByTitleLike(title);
+            return new PageInfo<>(tasks);
+        } catch (Exception e) {
+            throw new TaskOperationException("根据标题分页查询任务失败", e);
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PageInfo<Task> findTasksByStatusWithPage(String status, int pageNum, int pageSize) {
+        try {
+            PageHelper.startPage(pageNum, pageSize);
+            List<Task> tasks = taskMapper.findByStatus(status);
+            return new PageInfo<>(tasks);
+        } catch (Exception e) {
+            throw new TaskOperationException("根据状态分页查询任务失败", e);
         }
     }
 }
