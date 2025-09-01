@@ -5,6 +5,8 @@ import com.qiang.taskmanager.common.Result;
 import com.qiang.taskmanager.entity.Task;
 import com.qiang.taskmanager.service.TaskService;
 import io.swagger.v3.oas.annotations.Operation;
+
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/tasks")
 @Slf4j
-@Tag(name = "任务管理接口")
+@Tag(name = "任务管理接口", description = "任务的增删改查接口")
 public class TaskController {
 
     @Autowired
@@ -22,7 +24,7 @@ public class TaskController {
 
     // 获取所有任务
     @GetMapping
-    @Operation(summary = "获取所有任务")
+    @Operation(summary = "获取所有任务", description = "获取所有任务列表")
     public Result<List<Task>> getAllTasks() {
         log.info("获取所有任务");
         return Result.success(taskService.findAll());
@@ -30,7 +32,7 @@ public class TaskController {
 
     // 根据ID获取任务
     @GetMapping("/{id}")
-    @Operation(summary = "根据ID获取任务")
+    @Operation(summary = "根据ID获取任务", description = "根据任务ID获取任务详情")
     public Result<Task> getTaskById(@PathVariable Long id) {
         log.info("根据ID获取任务,ID为:{}", id);
         return Result.success(taskService.findById(id));
@@ -38,7 +40,7 @@ public class TaskController {
 
     // 创建新任务
     @PostMapping
-    @Operation(summary = "创建新任务")
+    @Operation(summary = "创建新任务", description = "创建一个新的任务")
     public Result createTask(@RequestBody Task task) {
         log.info("创建新任务");
         taskService.createTask(task);
@@ -47,7 +49,7 @@ public class TaskController {
 
     // 更新任务
     @PutMapping("/{id}")
-    @Operation(summary = "更新任务")
+    @Operation(summary = "更新任务", description = "根据任务ID更新任务")
     public Result updateTask(@PathVariable Long id, @RequestBody Task task) {
         log.info("更新任务,ID为：{}", id);
         task.setId(id);
@@ -57,7 +59,7 @@ public class TaskController {
 
     // 删除任务
     @DeleteMapping("/{id}")
-    @Operation(summary = "删除任务")
+    @Operation(summary = "删除任务", description = "根据任务ID删除任务")
     public Result deleteTask(@PathVariable Long id) {
         log.info("删除任务");
         taskService.deleteById(id);

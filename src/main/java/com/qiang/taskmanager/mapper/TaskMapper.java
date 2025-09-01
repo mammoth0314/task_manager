@@ -25,11 +25,11 @@ public interface TaskMapper {
     @Delete("DELETE FROM task WHERE id = #{id}")
     void deleteById(Long id);
 
-    // 根据标题模糊查询
+    // 根据标题模糊查询任务
     @Select("SELECT * FROM task WHERE title LIKE CONCAT('%', #{title}, '%')")
     List<Task> findByTitleLike(String title);
 
-    // 根据状态查询
+    // 根据状态查询任务
     @Select("SELECT * FROM task WHERE status = #{status}")
     List<Task> findByStatus(String status);
 }

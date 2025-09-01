@@ -3,7 +3,7 @@ package com.qiang.taskmanager.common;
 import lombok.Data;
 
 /**
- * 通用响应VO
+ * 通用响应结果类
  */
 @Data
 public class Result<T> {
