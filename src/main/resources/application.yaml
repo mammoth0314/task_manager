@@ -20,6 +20,15 @@ knife4j:
   enable: true
   # 生产环境建议关闭（安全）
   production: false
+  setting:
+    enable-auth: true
+    # 全局安全配置
+    security-schemes:
+      - name: Authorization
+        type: basic
+        in: header
+    # 应用到所有接口
+    enable-global-auth: true
 
 
 mybatis:
